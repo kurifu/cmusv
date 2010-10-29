@@ -1,0 +1,8 @@
+<% form_for @deliverable, :url => {:action => :create_deliverable}, :html => {:multipart => true} do |d| %>
+
+<p>
+  Zip:
+  <%= d.file_field :zip %>
+</p>
+  <%= d.submit "Submit" %>
+<% end %>

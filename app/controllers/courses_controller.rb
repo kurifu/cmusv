@@ -122,7 +122,36 @@ class CoursesController < ApplicationController
     end
   end
 
+  # Page with form to submit a deliverable attachment (zip)
+  def submit_deliverable
+    @deliverable = Deliverables.new
+    respond_to do |format|
+      format.html
+    end
+    
+  end
 
+=begin
+  def create_deliverable
+    puts "Inside create_deliverable"
+    @deliverable = Deliverables.new(params[:deliverable])
+
+    if @deliverable.save
+      puts "WORKS?!"
+      redirect_to(@deliverable, :notice => 'Deliverable was created successfully! YEE!')
+    else
+
+      if @deliverable.zip_file_name.blank?
+        puts "Detected bad submit"
+        #flash[:errors_zip] = "Please enter a Zip attachment<br\>"
+      else
+        puts "did not catch bad submit"
+      end
+
+      redirect_to :action => "submit_deliverable"
+    end
+  end
+=end
   private
   def index_core
     respond_to do |format|
