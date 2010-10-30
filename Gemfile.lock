@@ -136,4 +136,8 @@ DEPENDENCIES
   ruby-openid-apps-discovery
   shoulda
   taps
+<<<<<<< HEAD
   test-unit (= 1.2.3)
+=======
+  test-unit (= 1.2.3)
+>>>>>>> 71423208aa55d21c64d54a939a7fbf360f25d3fe

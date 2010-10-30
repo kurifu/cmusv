@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100930025344) do
+ActiveRecord::Schema.define(:version => 20101029002332) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -73,6 +73,15 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
     t.text     "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "deliverables", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "zip_file_name"
+    t.string   "zip_content_type"
+    t.integer  "zip_file_size"
+    t.datetime "zip_updated_at"
   end
 
   create_table "effort_log_line_items", :force => true do |t|
@@ -258,6 +267,14 @@ ActiveRecord::Schema.define(:version => 20100930025344) do
 
   add_index "teams_people", ["person_id"], :name => "index_teams_people_on_person_id"
   add_index "teams_people", ["team_id"], :name => "index_teams_people_on_team_id"
+
+  create_table "temps", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+  end
 
   create_table "user_versions", :force => true do |t|
     t.integer  "person_id"
