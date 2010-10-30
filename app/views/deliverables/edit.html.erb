@@ -1,0 +1,12 @@
+<h1>Editing deliverable</h1>
+
+<% form_for(@deliverable) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @deliverable %> |
+<%= link_to 'Back', deliverables_path %>

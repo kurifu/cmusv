@@ -121,6 +121,17 @@ end
 
 
 
+Factory.define :rob, :class => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.first_name "Rob"
+  p.last_name "Engel"
+  p.human_name "Rob Engel"
+  p.email "rob.engel@sv.cmu.edu"
+  p.is_student 1
+end
+
+
+Factory.create(:rob)
 Factory.create(:todd)
 martin = Factory.create(:martin)
 Factory.create(:ed)
@@ -131,6 +142,8 @@ Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
 
 architecture = Factory.create(:architecture)
+
+
 
 
 Factory.create(:team_triumphant, :primary_faculty_id => martin.id, :course_id=> architecture)
