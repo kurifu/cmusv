@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101029002332) do
+ActiveRecord::Schema.define(:version => 20101030004622) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -82,6 +82,12 @@ ActiveRecord::Schema.define(:version => 20101029002332) do
     t.string   "zip_content_type"
     t.integer  "zip_file_size"
     t.datetime "zip_updated_at"
+    t.datetime "submission_date"
+    t.integer  "person_id"
+    t.integer  "course_id"
+    t.integer  "task_number"
+    t.integer  "team_id"
+    t.string   "comments"
   end
 
   create_table "effort_log_line_items", :force => true do |t|

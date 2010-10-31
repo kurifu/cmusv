@@ -1,10 +1,6 @@
-Factory.define :rob, :class => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
-  p.first_name "Rob"
-  p.last_name "Engel"
-  p.human_name "Rob Engel"
-  p.email "rob.engel@sv.cmu.edu"
-  p.is_student 1
-  p.password 'test'
-  p.password_confirmation 'test'
+Factory.define :deliverable, :class =>  Deliverables do |d|
+  d.submission_date   Time.now
+  d.zip_file_name     'name'
+  d.zip_content_type  'application/zip'
+  d.zip_file_size  300
 end
