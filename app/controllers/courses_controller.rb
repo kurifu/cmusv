@@ -74,6 +74,7 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.xml
   def create
+    puts "Inside create method..."
     @course = Course.new(params[:course])
     @course_template = CourseNumber.find(params[:course][:course_number_id]) unless params[:course][:course_number_id].blank?
     if @course_template
@@ -124,34 +125,54 @@ class CoursesController < ApplicationController
 
   # Page with form to submit a deliverable attachment (zip)
   def submit_deliverable
-    @deliverable = Deliverables.new
+    #@deliverable = Deliverables.new
+    @attachment = Deliverables.new
     respond_to do |format|
       format.html
     end
     
   end
 
-=begin
   def create_deliverable
     puts "Inside create_deliverable"
-    @deliverable = Deliverables.new(params[:deliverable])
+    puts "PARAMS: #{params}"
+    @attachment = Deliverables.new(params[:deliverables])
+    if @attachment.nil?
+      puts "deliverable is nil"
+    else
+      puts "deliverable is NOT nil"
+      puts "Size: '#{@attachment.zip_file_size}'"
+      puts "Name: '#{@attachment.zip_file_name}'"
+      puts "Updated: '#{@attachment.zip_updated_at}'"
+      puts "ContentType: '#{@attachment.zip_content_type}'"
+    end
 
-    if @deliverable.save
+    if @attachment.save
       puts "WORKS?!"
-      redirect_to(@deliverable, :notice => 'Deliverable was created successfully! YEE!')
+      redirect_to :controller => "courses", :action => "show_deliverable", :id => @attachment.id
     else
 
-      if @deliverable.zip_file_name.blank?
-        puts "Detected bad submit"
-        #flash[:errors_zip] = "Please enter a Zip attachment<br\>"
-      else
-        puts "did not catch bad submit"
-      end
+      #flash[:notice] = "Please enter a Zip attac
+      
 
       redirect_to :action => "submit_deliverable"
     end
   end
-=end
+
+  def show_deliverable
+    puts "inside show_deliverable!"
+    @attachment = Deliverables.find(params[:id])
+    #@user = User.find(params[:id])
+    puts "Size: '#{@attachment.zip_file_size}'"
+    puts "Name: '#{@attachment.zip_file_name}'"
+    puts "Updated: '#{@attachment.zip_updated_at}'"
+    puts "ContentType: '#{@attachment.zip_content_type}'"
+
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
+
   private
   def index_core
     respond_to do |format|

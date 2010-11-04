@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'courses/create_deliverable', :controller => 'courses', :action => 'create_deliverable'
   map.connect 'courses/submit_deliverable', :controller => 'courses', :action => 'submit_deliverable'
+  map.connect 'courses/show_deliverable', :controller => 'courses', :action => 'show_deliverable'
   map.resources :users
 
   map.connect 'delayed_system_jobs/',  :controller => 'delayed_system_jobs', :action => "index"

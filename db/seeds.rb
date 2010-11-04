@@ -119,8 +119,6 @@ Factory.define :team_triumphant, :class => Team do |t|
  t.person_name3 "Charlie Moss"
 end
 
-
-
 Factory.define :rob, :class => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Rob"
@@ -130,6 +128,23 @@ Factory.define :rob, :class => :person do |p|
   p.is_student 1
 end
 
+Factory.define :cliff, :class => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.first_name "Cliff"
+  p.last_name "Chen"
+  p.human_name "Cliff Chen"
+  p.email "cliff.chen@sv.cmu.edu"
+  p.is_student 1
+end
+
+Factory.define :rahul, :class => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.first_name "Rahul"
+  p.last_name "Baxi"
+  p.human_name "Rahul Baxi"
+  p.email "rahul.baxi@sv.cmu.edu"
+  p.is_student 1
+end
 
 Factory.create(:rob)
 Factory.create(:todd)
@@ -140,6 +155,8 @@ Factory.create(:howard)
 Factory.create(:awe_smith)
 Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
+Factory.create(:cliff)
+Factory.create(:rahul)
 
 architecture = Factory.create(:architecture)
 

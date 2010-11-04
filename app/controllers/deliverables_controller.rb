@@ -58,6 +58,7 @@ class DeliverablesController < ApplicationController
   # POST /deliverables
   # POST /deliverables.xml
   def create
+    puts "deliverable controller"
     @deliverable = Deliverables.new(params[:deliverable])
 
     respond_to do |format|
