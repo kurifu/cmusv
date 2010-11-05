@@ -107,7 +107,7 @@ class TeamsController < ApplicationController
 
   def index_photos
     @teams = Team.find(:all, :order => "id", :conditions => ["course_id = ?", params[:course_id]]) unless params[:course_id].empty?
-    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = true"])
+    @faculty = User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = 't'"])
     @course = Course.find(params[:course_id])
 
     respond_to do |format|

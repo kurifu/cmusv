@@ -108,4 +108,18 @@ class DeliverablesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def list_bucket
+    
+    #@entry_pages, @entries = paginate_collection @bucket_list, { :per_page => 5, :page => @params[:page] }
+    #@count = (@entry_pages.current.to_i - 1) * 5
+    puts "BucketList: #{@bucket_list}"
+   end
+
+  def list_bucket
+    @conn = S3::AWSAuthConnection.new('AKIAICNJ2E4FNFFDNJEQ', '5RB9/gb4oJsbM6OBmlO0jXI0MaoXhjHYGI/y+sPM', false)
+    @bucket_list = S3Model.list_bucket("cmusv-rails-mfse-development")
+    puts "Entries: #{@conn.list_bucket(@bucket_list).entries}"
+    @items = @conn.list_bucket(@bucket_list).entries
+  end
 end

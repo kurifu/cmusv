@@ -1,8 +1,12 @@
 <% form_for @attachment, :url => "create_deliverable", :html => {:multipart => true} do |d| %>
 
 <p>
-  Zip:
-  <%= d.file_field :zip %>
+  Task Number:
+  <%= d.text_field :task_number %><br/>
+  Attachment:
+  <%= d.file_field :attachment %><br/>
+  Comments:
+  <%= d.text_field :comments %><br/>
 </p>
   <%= d.submit "Submit" %>
 <% end %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101030004622) do
+ActiveRecord::Schema.define(:version => 20101105164505) do
 
   create_table "course_numbers", :force => true do |t|
     t.string   "name"
@@ -78,10 +78,10 @@ ActiveRecord::Schema.define(:version => 20101030004622) do
   create_table "deliverables", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "zip_file_name"
-    t.string   "zip_content_type"
-    t.integer  "zip_file_size"
-    t.datetime "zip_updated_at"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
     t.datetime "submission_date"
     t.integer  "person_id"
     t.integer  "course_id"

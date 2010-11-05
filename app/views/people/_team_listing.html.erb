@@ -3,8 +3,9 @@
   <tr>
     <th>Course</th>
     <th>Team</th>
-    <th></th>
-    <th></th>
+    <th>Email</th>
+    <th>Tigris</th>
+    <th>Upload</th>
     <th>Semester</th>
     <th>Year</th>
     <th width="100">Faculty</th>
@@ -29,6 +30,7 @@
       <% else %>
         <td> &nbsp; </td>
       <% end %>
+        <td><%= link_to "Upload", "courses/#{team.course.id}/submit_deliverable" %></td>
         <td><%=h team.course.semester %></td>
         <td><%=h team.course.year %></td>
       <% if team.primary_faculty %>

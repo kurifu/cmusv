@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Course do
-
+=begin
   Factory.define :course, :class => Course do |c|
     c.name 'Course'
     c.semester ApplicationController.current_semester
@@ -20,7 +20,7 @@ describe Course do
     c.semester ApplicationController.next_semester
     c.year ApplicationController.next_semester_year
   end
-
+=end
 
 
   it "should know which courses are offered this semester" do

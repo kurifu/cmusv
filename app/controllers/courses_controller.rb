@@ -125,47 +125,50 @@ class CoursesController < ApplicationController
 
   # Page with form to submit a deliverable attachment (zip)
   def submit_deliverable
-    #@deliverable = Deliverables.new
     @attachment = Deliverables.new
     respond_to do |format|
       format.html
     end
-    
   end
 
   def create_deliverable
-    puts "Inside create_deliverable"
-    puts "PARAMS: #{params}"
-    @attachment = Deliverables.new(params[:deliverables])
-    if @attachment.nil?
-      puts "deliverable is nil"
-    else
-      puts "deliverable is NOT nil"
-      puts "Size: '#{@attachment.zip_file_size}'"
-      puts "Name: '#{@attachment.zip_file_name}'"
-      puts "Updated: '#{@attachment.zip_updated_at}'"
-      puts "ContentType: '#{@attachment.zip_content_type}'"
-    end
+    #puts "check: #{current_user}"
+    #puts "check: #{current_user.first_name}"
+    #@course = Course.find(params[:course_id])
 
+    @attachment = Deliverables.new(params[:deliverables])
+    @attachment.course_id = params[:course_id]
+
+    #teams_in_course = Team.find_by_id(:conditions => ["course_id = #{params[:course_id]}"])
+    #team_for_person = TeamsPeople.find(:team_id, :conditions => ["person_id = #{params[:person_id]}"])
+    #@attachment.team_id = teams_in_course & team_for_person
+
+    #target = Team.find(:course_id, :joins => :teams_people, :conditions => {:teams_people => {:person_id => params[:person_id], :team_id => }})
+    
+
+    #team_ids = TeamsPeople.find(:team_id, :joins => :condition => ["person_id = ?", params[:person_id]])
+    #@attachment.team_id = teams_ids.find(:id, :conditions => ["email = ?", current_user.email])
+    @attachment.person_id = params[:person_id]
+    @attachment.submission_date = Time.now
+    #@attachment.task_number =
+    #@attachment.comments =
+   
     if @attachment.save
       puts "WORKS?!"
       flash[:notice]
       redirect_to :controller => "courses", :action => "show_deliverable", :id => @attachment.id
     else
-      puts "didn't save!"
-      flash[:notice] = "Please enter a Zip file"
+      #puts "didn't save!"
+      flash[:notice] = "Please enter an Attachment"
       redirect_to :action => "submit_deliverable"
     end
   end
 
   def show_deliverable
-    puts "inside show_deliverable!"
     @attachment = Deliverables.find(params[:id])
-    #@user = User.find(params[:id])
-    puts "Size: '#{@attachment.zip_file_size}'"
-    puts "Name: '#{@attachment.zip_file_name}'"
-    puts "Updated: '#{@attachment.zip_updated_at}'"
-    puts "ContentType: '#{@attachment.zip_content_type}'"
+    #@course_name = Courses.find(:name, :conditions => ["course_id = #{@attachment.course_id}"])
+    #@team_name = Teams.find(:name, :conditions => ["id = #{@attachment.team_id}"])
+    #User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = 't'"])
 
     respond_to do |format|
       format.html # show.html.erb

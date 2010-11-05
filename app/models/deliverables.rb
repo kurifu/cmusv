@@ -5,19 +5,19 @@ class Deliverables < ActiveRecord::Base
 
 #   :url => "/:attachment/:id_:style.:extension",
 #    :path => ":rails_root/public/:attachment/:id_:style.:extension",
-   has_attached_file :zip,
+   has_attached_file :attachment,
      :storage => :s3,
     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :path => ":attachment/:id/#{:zip_file_name}.:extension",
+    :path => ":attachment/:id/#{:attachment_file_name}.:extension",
     :bucket => 'cmusv-rails-mfse-development'
 
   #validates_presence_of :submission_date, :person
 
-  validates_attachment_presence :zip
+  validates_attachment_presence :attachment
 
   # Consider removing :message, as it will display in /deliverables by default
   # instead of /courses/show_deliverable
-  validates_attachment_content_type :zip,
-    :content_type => ['application/zip'],
-    :message => "Please attach a .zip file"
+  #validates_attachment_content_type :attachment,
+  #  :content_type => ['application/zip'],
+  #  :message => "Please attach a .zip file"
 end
