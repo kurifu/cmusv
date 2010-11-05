@@ -14,6 +14,9 @@ config/systems.cc.yml.yml
 config/adobe_cnnect.yml
 config/systems.yml
 
+db/development.sqlite3
+db/test.sqlite3
+
 log/*
 nbproject/*
 .idea/*

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :deliverables
+
 
   map.connect 'courses/create_deliverable', :controller => 'courses', :action => 'create_deliverable'
   map.connect 'courses/submit_deliverable', :controller => 'courses', :action => 'submit_deliverable'

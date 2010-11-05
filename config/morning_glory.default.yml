@@ -1,7 +1,7 @@
 --- 
 production: 
   delete_prev_rev: false
-  bucket: 
+  bucket: cmusv-rails-mfse-production
   s3_logging_enabled: false
   enabled: true
   asset_directories: 
@@ -13,15 +13,15 @@ production:
   - charts
   revision: 0cfe
 development: 
-  bucket: 
+  bucket: cmusv-rails-mfse-development
   enabled: false
   revision: 45c2
 staging: 
-  bucket: 
+  bucket: cmusv-rails-mfse-test
   enabled: false
 test: 
   delete_prev_rev: true
-  bucket:
+  bucket: cmusv-rails-mfse-test
   s3_logging_enabled: false
   enabled: false
   revision: "20100316165112"
