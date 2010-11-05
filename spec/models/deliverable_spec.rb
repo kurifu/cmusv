@@ -56,5 +56,24 @@ describe Deliverables do
     @deliverable_submission.team_id = 21112
     @deliverable_submission.should be_valid
   end
+  
+end
+
+describe "Deliverable Email Notifications" do
+
+before(:each) do
+  Person.delete_all
+  ActionMailer::Base.delivery_method = :test
+  ActionMailer::Base.perform_deliveries = :true
+  ActionMailer::Base.deliveries = []
+end
+
+  it "should send Rob & Ibrahim an email" do
+     rob = Factory.create(:robert)
+     team = rob.teams.find_by_name("team R")
+     Factory.create(:deliverable_email, :team => team,
+       :person => rob, :course => team.course)
+     ActionMailer::Base.deliveries.size.should == 1
+  end
 
 end

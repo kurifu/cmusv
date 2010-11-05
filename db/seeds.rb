@@ -126,7 +126,7 @@ Factory.define :rob, :class => :person do |p|
   p.first_name "Rob"
   p.last_name "Engel"
   p.human_name "Rob Engel"
-  p.email "rob.engel@sv.cmu.edu"
+  p.email "robe.engel@sv.cmu.edu"
   p.is_student 1
 end
 
