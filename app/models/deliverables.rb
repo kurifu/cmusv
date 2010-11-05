@@ -15,7 +15,9 @@ class Deliverables < ActiveRecord::Base
 
   validates_attachment_presence :zip
 
+  # Consider removing :message, as it will display in /deliverables by default
+  # instead of /courses/show_deliverable
   validates_attachment_content_type :zip,
     :content_type => ['application/zip'],
-    :notice => "Please attach a .zip file"
+    :message => "Please attach a .zip file"
 end

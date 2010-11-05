@@ -149,12 +149,11 @@ class CoursesController < ApplicationController
 
     if @attachment.save
       puts "WORKS?!"
+      flash[:notice]
       redirect_to :controller => "courses", :action => "show_deliverable", :id => @attachment.id
     else
-
-      #flash[:notice] = "Please enter a Zip attac
-      
-
+      puts "didn't save!"
+      flash[:notice] = "Please enter a Zip file"
       redirect_to :action => "submit_deliverable"
     end
   end
