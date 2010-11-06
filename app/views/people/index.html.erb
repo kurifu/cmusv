@@ -44,17 +44,40 @@ $(document).ready(function()
       }
 );
 
+/*
 function toggleStudents()
 {
-  /* we don't use .toggle since the state may be inaccurate from a page reload */
+  // we don't use .toggle since the state may be inaccurate from a page reload 
   if ($('#student_checkbox').is(':checked')) {
     $(".student").show();
   } else {
     $(".student").hide();
   }
   $("#filterBoxOne").trigger("keyup");
+  
+ 
+}*/
+
+
+function toggleAny(element)
+{
+  checkboxID = element.id;
+  filter = checkboxID.slice(0,checkboxID.lastIndexOf('_'));
+
+  if($('#'+checkboxID).is(':checked'))
+    {
+      $("."+filter).show();
+    }
+    else
+    {
+      $("."+filter).hide();
+    }
+
+  $("#filterBoxOne").trigger("keyup");
 }
 
+
+/*
 function toggleStaff()
 {
   if ($('#staff_checkbox').is(':checked')) {
@@ -63,7 +86,10 @@ function toggleStaff()
     $(".staff").hide();
   }
   $("#filterBoxOne").trigger("keyup");
-}
+  
+   alert("called toggleAny");
+  
+}*/
 
 function updateImage(uri,label)
 {
@@ -77,8 +103,9 @@ function updateImage(uri,label)
 
 <h1>Listing people</h1>
 <div class="right_link" ><%= link_to 'See phone book', :action=>'phone_book' %><br/><%= link_to 'See photo book', :action=>'photo_book' %></div>
-<div style="float:none"><%= render :partial => "tablesorter_filter_box" %><label>Show Students</label><input type="checkbox" id="student_checkbox" onchange="toggleStudents()" value="1" checked="checked" />
-  <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleStaff()" value="1" checked="checked" />
+<div style="float:none"><%= render :partial => "tablesorter_filter_box" %>
+  <label>Show Students</label><input type="checkbox" id="student_checkbox" onchange="toggleAny(this)" value="1" checked="checked" />
+  <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleAny(this)" value="1" checked="checked" />
 </div>
 
 <div id="image_box">
@@ -100,7 +127,7 @@ function updateImage(uri,label)
 <tbody>
 <% for person in @people %>
 
-<tr class="tablesorter <%if person.is_student %>student<% end %> <% if person.is_staff %>staff<%end%>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
+<tr class="tablesorter <%= add_person_classes(person) %>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
     <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
     <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>    
     <td><a href='http://info.sv.cmu.edu/twiki/bin/view/Main/<%= person.twiki_name %>' target='_top'><%= image_tag('/images/twiki.gif', :width=>'16', :height=>'16', :border=>"0", :alt=>"My TWiki page", :title=>"My TWiki page") %></a>

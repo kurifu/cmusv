@@ -7,5 +7,18 @@ def display_location(person)
 
 end
 
+def add_person_classes(person)
+   class_name = ""
+   class_name += "student " if person.is_student
+   class_name += "staff " if person.is_staff
+   class_name += person.local_near_remote+" " if person.local_near_remote != "Unknown"
+   class_name += "image " if  person.image_uri.index("mascot.jpg") !=nil
+   class_name += "grad_this_year " if person.graduation_year == Time.year
+   class_name += "email " if person.email.nil?
+   class_name += "tigris" if person.tigris.nil?
+   class_name += "active" if person.is_active
+  return class_name
+end
 
 end
+

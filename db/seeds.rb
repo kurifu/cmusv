@@ -146,6 +146,16 @@ Factory.define :rahul, :class => :person do |p|
   p.is_student 1
 end
 
+Factory.define :ibrahim, :class => :person do |p|
+  p.persistence_token Time.now.to_f.to_s
+  p.first_name "Ibrahim"
+  p.last_name "ALShehri"
+  p.human_name "Ibrahim ALShehri"
+  p.email "ibrahim.alshehri@sv.cmu.edu"
+  p.is_student 1
+end
+
+Factory.create(:ibrahim)
 Factory.create(:rob)
 Factory.create(:todd)
 martin = Factory.create(:martin)
