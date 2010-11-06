@@ -356,8 +356,8 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
         @semester_panel.track = ""
         @semester_panel.graduation_year = ""
         @semester_panel.is_part_time = params[:program] || "PT"
-        @semester_panel.person_id = ""
-        @semester_panel.course_id = ""
+        @semester_panel.person_id =0
+        @semester_panel.course_id =0
         @semester_panel.semester = ApplicationController.current_semester
         @semester_panel.year = Date.today.cwyear
       end
@@ -391,8 +391,9 @@ where e.sum>0 and e.task_type_id=t.id and e.effort_log_id=el.id AND el.year=#{ye
 
   def campus_week
       determine_panel_state()
-      puts "PAREMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:id]}"
-      title = "Campus View - Week "  + @panel_state.week_number.to_s + " of " + @panel_state.year.to_s
+      puts "PARAMETERS: #{@panel_state.year}, #{@panel_state.week_number}, #{params[:id]}"
+      title = "Campus View - Week "  + @panel_state.week_number.to_s + " of " +
+        @panel_state.year.to_s
       reports = get_campus_week_data(@panel_state.year, @panel_state.week_number)
       @chart_url = generate_google_box_chart(title, reports)
     end
