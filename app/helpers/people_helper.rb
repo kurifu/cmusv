@@ -11,12 +11,14 @@ def add_person_classes(person)
    class_name = ""
    class_name += "student " if person.is_student
    class_name += "staff " if person.is_staff
-   class_name += person.local_near_remote+" " if person.local_near_remote != "Unknown"
+   class_name += person.local_near_remote+" " if person.local_near_remote != "Unknown" && !person.local_near_remote.nil?
    class_name += "image " if  person.image_uri.index("mascot.jpg") !=nil
-   class_name += "grad_this_year " if person.graduation_year == Time.now.year
-   class_name += "email " if person.email.nil?
-   class_name += "tigris" if person.tigris.nil?
-   class_name += "active" if person.is_active
+   class_name += "grad_this_year " if person.graduation_year == Time.now.year.to_s
+   class_name += "email " if person.email
+   class_name += "tigris " if person.tigris
+   class_name += "active " if person.is_active
+   class_name += "inactive " if !person.is_active
+   class_name += "part_time " if person.is_part_time
   return class_name
 end
 

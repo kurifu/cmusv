@@ -103,9 +103,24 @@ function updateImage(uri,label)
 
 <h1>Listing people</h1>
 <div class="right_link" ><%= link_to 'See phone book', :action=>'phone_book' %><br/><%= link_to 'See photo book', :action=>'photo_book' %></div>
-<div style="float:none"><%= render :partial => "tablesorter_filter_box" %>
-  <label>Show Students</label><input type="checkbox" id="student_checkbox" onchange="toggleAny(this)" value="1" checked="checked" />
-  <label>Show Staff</label><input type="checkbox" id="staff_checkbox" onchange="toggleAny(this)" value="1" checked="checked" />
+<div style="float:none"><%= render :partial => "tablesorter_filter_box" %> 
+  <div style="float:left; width:50%">
+  <input type="checkbox" id="student_checkbox" onchange="toggleAny(this)" value="1" checked="checked" />  <label>Show Students</label><br />
+  <input type="checkbox" id="staff_checkbox" onchange="toggleAny(this)" value="1" checked="checked" /><label>Show Staff</label><br />
+  <input type="checkbox" id="Local_checkbox" onchange="toggleAny(this)" value="1" /><label>Show Local Students</label><br />
+  <input type="checkbox" id="Remote_checkbox" onchange="toggleAny(this)" value="1" /><label>Show Remote Students</label><br />
+  <input type="checkbox" id="Near_checkbox" onchange="toggleAny(this)" value="1" /><label>Show Nearby Students</label><br />
+  <input type="checkbox" id="image_checkbox" onchange="toggleAny(this)" value="1" /><label>Show People with default image</label><br />
+  </div>
+
+  <div style="float:left; width:50%" >
+  <input type="checkbox" id="part_time_checkbox" onchange="toggleAny(this)" value="1" /><label>Show Part-Time Students</label><br />
+  <input type="checkbox" id="grad_this_year_checkbox" onchange="toggleAny(this)" value="1" /><label>Show Student who graduate this year</label><br />
+  <input type="checkbox" id="email_checkbox" onchange="toggleAny(this)" value="1" /> <label>Show People with email address</label><br />
+  <input type="checkbox" id="tigris_checkbox" onchange="toggleAny(this)" value="1" /><label>Show Student with tigris account</label><br />
+  <input type="checkbox" id="active_checkbox" onchange="toggleAny(this)" value="1"  checked="checked" /><label>Show Active Users</label><br />
+  <input type="checkbox" id="inactive_checkbox" onchange="toggleAny(this)" value="1" /><label>Show InActive Users</label><br />
+  </div>
 </div>
 
 <div id="image_box">
@@ -127,9 +142,9 @@ function updateImage(uri,label)
 <tbody>
 <% for person in @people %>
 
-<tr class="tablesorter <%= add_person_classes(person) %>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
-    <td><%= twiki_user_link(person.twiki_name, person.first_name) %></td>
-    <td><%= twiki_user_link(person.twiki_name, person.last_name) %></td>    
+<tr <%= "style = 'display:none'" if !person.is_active  %> class="tablesorter <%= add_person_classes(person) %>"  onmouseover="updateImage('<%= image_path(person.image_uri) %>','<%=person.human_name%>')">
+    <td><%= twiki_user_link(person.twiki_name, person.first_name) %><p style="display:none"><%= person.work_state  %> </p></td>
+    <td><%= twiki_user_link(person.twiki_name, person.last_name) %><p style="display:none"><%= person.organization_name  %> </p></td>
     <td><a href='http://info.sv.cmu.edu/twiki/bin/view/Main/<%= person.twiki_name %>' target='_top'><%= image_tag('/images/twiki.gif', :width=>'16', :height=>'16', :border=>"0", :alt=>"My TWiki page", :title=>"My TWiki page") %></a>
         <% if person.is_adobe_connect_host %><%= image_tag("/images/connect.gif", :width=>"16", :height=>"16", :alt=>"Adobe Connect Host", :title=>"I am Adobe Connect Host") %><% end %>
         <% if current_user.is_staff? || current_user.is_admin? %>
@@ -140,6 +155,7 @@ function updateImage(uri,label)
     <td><%=h person.masters_program %></td>
     <td><%=h person.masters_track %></td>
     <td><%= link_to 'Show', person %></td>
+
 <% if current_user && current_user.is_staff? %>
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
 <% else %>

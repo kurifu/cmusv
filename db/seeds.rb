@@ -8,7 +8,8 @@ Factory.define :person, :class => Person do |p|
 end
 
 Factory.define :todd, :parent => :person  do |p|
-  p.persistence_token Time.now.to_f.to_s
+  #p.persistence_token Time.now.to_f.to_s
+  p.persistence_token Authlogic::Random.hex_token
   p.first_name "Todd"
   p.last_name "Sedano"
   p.human_name "Todd Sedano"
@@ -17,7 +18,7 @@ Factory.define :todd, :parent => :person  do |p|
 end
 
 Factory.define :martin, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Martin"
   p.last_name "Radley"
   p.human_name "Martin Radley"
@@ -26,29 +27,32 @@ Factory.define :martin, :parent => :person do |p|
 end
 
 Factory.define :ed, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Ed"
   p.last_name "Katz"
   p.human_name "Ed Katz"
   p.email "ed.katz@sv.cmu.edu"
   p.is_staff 1
+  p.local_near_remote "Near"
 end
 
 Factory.define :chris, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Chris"
   p.last_name "Jensen"
   p.human_name "Chris Jensen"
   p.email "chris.jensen@sv.cmu.edu"
+  p.local_near_remote "Local"
   p.is_student 1
 end
 
 Factory.define :howard, :parent => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Howard"
   p.last_name "Huang"
   p.human_name "Howard Awesome Huang"
   p.email "howard.huang@sv.cmu.edu"
+  p.local_near_remote "Remote"
   p.is_student 1
 end
 
@@ -56,7 +60,7 @@ end
 Factory.define :awe_smith, :parent => :person do |p|
   p.is_student 1
   p.is_part_time 1
-  p.graduation_year "2021"
+  p.graduation_year "2010"
   p.masters_program  "SE"
   p.masters_track  "DM"
   p.twiki_name "AweSmith"
@@ -81,6 +85,7 @@ Factory.define :betty_ross, :parent => :person do |p|
   p.image_uri "/images/mascot.jpg"
   p.email "betty.ross@sv.cmu.edu"
   p.webiso_account "bross@andrew.cmu.edu"
+  p.tigris "abc"
 end
 
 Factory.define :charlie_moss, :parent => :person do |p|
@@ -119,17 +124,18 @@ Factory.define :team_triumphant, :class => Team do |t|
  t.person_name3 "Charlie Moss"
 end
 
-Factory.define :rob, :class => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+Factory.define :rob, :parent => :person do |p|
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Rob"
   p.last_name "Engel"
   p.human_name "Rob Engel"
   p.email "robe.engel@sv.cmu.edu"
   p.is_student 1
+  p.is_active false
 end
 
-Factory.define :cliff, :class => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+Factory.define :cliff, :parent => :person do |p|
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Cliff"
   p.last_name "Chen"
   p.human_name "Cliff Chen"
@@ -137,23 +143,27 @@ Factory.define :cliff, :class => :person do |p|
   p.is_student 1
 end
 
-Factory.define :rahul, :class => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+Factory.define :rahul, :parent => :person do |p|
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Rahul"
   p.last_name "Baxi"
   p.human_name "Rahul Baxi"
   p.email "rahul.baxi@sv.cmu.edu"
+  p.work_state "India"
   p.is_student 1
 end
 
-Factory.define :ibrahim, :class => :person do |p|
-  p.persistence_token Time.now.to_f.to_s
+Factory.define :ibrahim, :parent => :person do |p|
+ p.persistence_token Authlogic::Random.hex_token
   p.first_name "Ibrahim"
   p.last_name "ALShehri"
   p.human_name "Ibrahim ALShehri"
   p.email "ibrahim.alshehri@sv.cmu.edu"
+  p.organization_name "Saudi Aramco"
   p.is_student 1
 end
+
+
 
 Factory.create(:ibrahim)
 Factory.create(:rob)
