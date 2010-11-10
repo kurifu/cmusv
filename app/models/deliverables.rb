@@ -8,15 +8,21 @@ class Deliverables < ActiveRecord::Base
 #    :path => ":rails_root/public/:attachment/:id_:style.:extension",
    has_attached_file :attachment,
      :storage => :s3,
-    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-    :path => ":attachment/:id/#{:attachment_file_name}.:extension",
-    :bucket => 'cmusv-rails-mfse-development'
-
+     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+     #:path => ":attachment/:id/#{:attachment_file_name}.:extension",
+     :path => "attachments/:id/:attachment_file_name",
+     :bucket => 'cmusv-rails-mfse-development'
+=begin
+  has_attached_file :paper,
+      :storage => :s3,
+      :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+      :path => "papers/:id/:filename"
+=end
   #validates_presence_of :submission_date, :person
 
   validates_attachment_presence :attachment
 
-  validates_attachment_content_type :zip,
+  validates_attachment_content_type :attachment,
     :content_type => ['application/zip'],
     :message => "Please attach a .zip file"
 
