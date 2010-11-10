@@ -2,13 +2,29 @@ class PeopleController < ApplicationController
 
   before_filter :require_user, :except => [:show_by_twiki]
 
-# Floating box source: http://roshanbh.com.np/2008/07/top-floating-message-box-using-jquery.html
+  # Floating box source: http://roshanbh.com.np/2008/07/top-floating-message-box-using-jquery.html
 
   layout 'cmu_sv'
 
-  
-#  auto_complete_for :person, :human_name
-#  protect_from_forgery :only => [:create, :update, :destroy] #required for auto complete to work
+  def course_filter
+    course = params[:filter_form][:course]
+    semester = params[:filter_form][:semester]
+    year = params[:filter_form][:year]
+    matches = Course.find(:all, :conditions => ["name = ? and semester = ? and year = ?", course, semester, year])
+    render :update do |page|
+      page.alert('asdf');
+       # for team in matches.teams
+        #  if matches.teams != []
+         #   for person in team.people
+          #    page << "$('#person_#{person}').show();"
+          #  end
+         # end
+       # end
+      #end
+    end
+  end
+  #  auto_complete_for :person, :human_name
+  #  protect_from_forgery :only => [:create, :update, :destroy] #required for auto complete to work
   
   # GET /people
   # GET /people.xml
@@ -20,17 +36,17 @@ class PeopleController < ApplicationController
         @people = Person.find(:all, :conditions => ['human_name ILIKE ?', "%#{params[:search]}%"])
       end
     else
-          #@people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
-          @people = Person.find(:all,  :order => "first_name ASC, last_name ASC")
+      #@people = Person.find(:all, :conditions => ['is_active = ?', true],  :order => "first_name ASC, last_name ASC")
+      @people = Person.find(:all,  :order => "first_name ASC, last_name ASC")
     end
 
     
-#    respond_to do |format|
-##      format.html # index.html.erb
-#      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
-#      format.js   { render :js => @people, :layout => false }
-#      format.xml  { render :xml => @people }
-#    end
+    #    respond_to do |format|
+    ##      format.html # index.html.erb
+    #      format.html { render :html => @people, :layout => "cmu_sv" } # index.html.erb
+    #      format.js   { render :js => @people, :layout => false }
+    #      format.xml  { render :xml => @people }
+    #    end
   end
 
   def phone_book
@@ -95,7 +111,7 @@ class PeopleController < ApplicationController
       @person.updated_by_user_id = current_user.id if current_user
       @person.image_uri = "/images/mascot.jpg"
       @person.local_near_remote = "Unknown"
-#      @person.save
+      #      @person.save
       @person.save_without_session_maintenance
 
       GenericMailer.deliver_email(
@@ -137,11 +153,11 @@ class PeopleController < ApplicationController
     @person = Person.new
     @person.is_active = true
 
-     if development?
-       @domain = GOOGLE_DOMAIN
-     else
-       @domain = "sv.cmu.edu"
-     end
+    if development?
+      @domain = GOOGLE_DOMAIN
+    else
+      @domain = "sv.cmu.edu"
+    end
 
 
     respond_to do |format|
@@ -152,10 +168,10 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-#    if !(current_user.is_admin? || current_user.is_staff?)
-#      flash[:error] = "You don't have permission to do this action."
-#      redirect_to(people_url) and return
-#    end
+    #    if !(current_user.is_admin? || current_user.is_staff?)
+    #      flash[:error] = "You don't have permission to do this action."
+    #      redirect_to(people_url) and return
+    #    end
 
     @person = Person.find(params[:id])
   end
@@ -179,33 +195,33 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
 
-#      error_message = ""
-#      if params[:create_google_email]
-#         password = 'just4now' + Time.now.to_f.to_s[-4,4] # just4now0428
-#         status = @person.create_google_email(password)
-#         if status.is_a?(String)
-#           error_message += "Google account not created. " + status + "</br></br>"
-#         else
-#          send_email([@person.personal_email, @person.email], @person.email, generate_message(@person, password))
-#         end
-#      end
-#      if params[:create_twiki_account]
-#        status = @person.create_twiki_account
-#        error_message +=  'TWiki account was not created.<br/></br>' unless status
-#        status = @person.reset_twiki_password
-#        error_message +=  'TWiki account password was not reset.</br>' unless status
-#      end
+      #      error_message = ""
+      #      if params[:create_google_email]
+      #         password = 'just4now' + Time.now.to_f.to_s[-4,4] # just4now0428
+      #         status = @person.create_google_email(password)
+      #         if status.is_a?(String)
+      #           error_message += "Google account not created. " + status + "</br></br>"
+      #         else
+      #          send_email([@person.personal_email, @person.email], @person.email, generate_message(@person, password))
+      #         end
+      #      end
+      #      if params[:create_twiki_account]
+      #        status = @person.create_twiki_account
+      #        error_message +=  'TWiki account was not created.<br/></br>' unless status
+      #        status = @person.reset_twiki_password
+      #        error_message +=  'TWiki account password was not reset.</br>' unless status
+      #      end
 
-#      if @person.save
+      #      if @person.save
       if @person.save_without_session_maintenance
-         create_google_email =  params[:create_google_email]
-         create_twiki_account = params[:create_twiki_account]
-         create_yammer_account = params[:create_yammer_account]
-         Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil? &&  params[:create_yammer_account].nil?
-#          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
-#          job.perform
+        create_google_email =  params[:create_google_email]
+        create_twiki_account = params[:create_twiki_account]
+        create_yammer_account = params[:create_yammer_account]
+        Delayed::Job.enqueue(PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account], params[:create_yammer_account])) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil? &&  params[:create_yammer_account].nil?
+        #          job = PersonJob.new(@person.id, params[:create_google_email], params[:create_twiki_account]) unless params[:create_google_email].nil? &&  params[:create_twiki_account].nil?
+        #          job.perform
 
-#        flash[:error] = error_message unless error_message.blank?
+        #        flash[:error] = error_message unless error_message.blank?
 
         flash[:notice] = 'Person was successfully created.'
         format.html { redirect_to(@person) }
@@ -220,17 +236,17 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-#    if !(current_user.is_admin? || current_user.is_staff?)
-#      flash[:error] = 'You don''t have permission to do this action.'
-#      redirect_to(people_url) and return
-#    end
+    #    if !(current_user.is_admin? || current_user.is_staff?)
+    #      flash[:error] = 'You don''t have permission to do this action.'
+    #      redirect_to(people_url) and return
+    #    end
 
     @person = Person.find(params[:id])
     @person.updated_by_user_id = current_user.id
 
     respond_to do |format|
 
-#      if @person.save_without_session_maintenance
+      #      if @person.save_without_session_maintenance
       if @person.update_attributes(params[:person])
         flash[:notice] = 'Person was successfully updated.'
         format.html { redirect_to(@person) }
@@ -249,8 +265,8 @@ class PeopleController < ApplicationController
   end
 
   def robots
-      logger.info("curriculum comment: robot detected")
-      format.html # index.html.erb
+    logger.info("curriculum comment: robot detected")
+    format.html # index.html.erb
   end
 
   # DELETE /people/1
@@ -278,8 +294,8 @@ class PeopleController < ApplicationController
     person_id = @person.id.to_i
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
-      flash[:error] = 'You don''t have permission to see another person''s teams.'
-      redirect_to(people_url) and return
+        flash[:error] = 'You don''t have permission to see another person''s teams.'
+        redirect_to(people_url) and return
       end
     end
     @course = Course.new()
