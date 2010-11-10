@@ -119,6 +119,22 @@ Factory.define :team_triumphant, :class => Team do |t|
  t.person_name3 "Charlie Moss"
 end
 
+Factory.define :ian_zhang, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 0
+  p.graduation_year "2011"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "IanZhang"
+  p.first_name "Ian"
+  p.last_name "Zhang"
+  p.human_name "Ian Zhang"
+  p.image_uri "/images/mascot.jpg"
+  p.email "ian.zhang@sv.cmu.edu"
+  p.webiso_account "yz3@andrew.cmu.edu"
+end
+
+
 Factory.define :rob, :class => :person do |p|
   p.persistence_token Time.now.to_f.to_s
   p.first_name "Rob"
@@ -157,6 +173,7 @@ Factory.create(:betty_ross)
 Factory.create(:charlie_moss)
 Factory.create(:cliff)
 Factory.create(:rahul)
+Factory.create(:ian_zhang)
 
 architecture = Factory.create(:architecture)
 
