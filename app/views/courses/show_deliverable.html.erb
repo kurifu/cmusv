@@ -3,6 +3,7 @@ File Name: <%= @attachment.attachment_file_name %><br/>
 File Content Type: <%= @attachment.attachment_content_type %><br/>
 File Size (Bytes): <%= @attachment.attachment_file_size %><br/>
 File Updated At: <%= @attachment.attachment_updated_at %><p/>
-
+<%=link_to "#{@attachment.attachment.url}", @attachment.attachment.url%>
 Course: <%= @course_name %><br/>
-Submitted By: <%= @team_name %>
+Submitted By: <%= @attachment.person_id %><br/>
+Submitted for Team: <%= @team_name %>

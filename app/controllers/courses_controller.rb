@@ -34,6 +34,9 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find(params[:id])
 
+    session[:team_id] = params[:team_id]
+    puts "TEAM ID: #{session[:team_id]}"
+
 #    teams = Team.find_by_course_id(params[:id])
     teams = Team.find(:all, :conditions => ["course_id = ?", params[:id]])
 
@@ -132,33 +135,59 @@ class CoursesController < ApplicationController
   end
 
   def create_deliverable
-    #puts "check: #{current_user}"
-    #puts "check: #{current_user.first_name}"
-    #@course = Course.find(params[:course_id])
 
     @attachment = Deliverables.new(params[:deliverables])
-    @attachment.course_id = params[:course_id]
 
+    unless @attachment.valid?
+      flash[:notice] = "Please enter a valid attachment"
+      redirect_to :action => "submit_deliverable"
+      return
+    end
+
+    @attachment.course_id = params[:course_id]
+    @attachment.person_id = session[:person_id]
+    @attachment.submission_date = Time.now
+    @attachment.task_number = params[:task_number]
+    @attachment.comments = params[:comments]
+    @attachment.team_id = session[:team_id]
     #teams_in_course = Team.find_by_id(:conditions => ["course_id = #{params[:course_id]}"])
     #team_for_person = TeamsPeople.find(:team_id, :conditions => ["person_id = #{params[:person_id]}"])
     #@attachment.team_id = teams_in_course & team_for_person
 
     #target = Team.find(:course_id, :joins => :teams_people, :conditions => {:teams_people => {:person_id => params[:person_id], :team_id => }})
-    
 
     #team_ids = TeamsPeople.find(:team_id, :joins => :condition => ["person_id = ?", params[:person_id]])
     #@attachment.team_id = teams_ids.find(:id, :conditions => ["email = ?", current_user.email])
-    @attachment.person_id = params[:person_id]
-    @attachment.submission_date = Time.now
-    #@attachment.task_number =
-    #@attachment.comments =
-   
+
+#    @target_team = User.find(@attachment.person_id).teams
+#    if @target_team.course_id == @attachment.course_id
+#  puts "TARGET TEAM COURSE ID #{@target_team.course_id}"
+#    @attachment.team_id = @target_team.team_id
+#      puts "CHECK team_id: #{@attachment.team_id}"
+#    else
+#      puts "ERROR?"
+#    end
+puts "MYTEAM #{session[:team_id]}"
+#    @target_team = User.find(@attachment.person_id)
+#
+#    @target_course_team = Course.find(@attachment.course_id).teams
+#
+#    for team in @target_course_team
+#          puts "TEAM: #{team.id}"
+#      members = Team.find(team.id).people
+#      puts ("TEAM MEMBER #{members.id}\n")
+#    end
+#    puts "CURRENT USER #{current_user}"
+      #puts "COURSE ID #{@target_team_ac}"
+    
     if @attachment.save
       puts "WORKS?!"
       flash[:notice]
-      redirect_to :controller => "courses", :action => "show_deliverable", :id => @attachment.id
+      redirect_to :controller => "courses", :action => "show_deliverable",
+        :id => @attachment.id,
+        :course_id => @attachment.course_id
     else
-      #puts "didn't save!"
+      puts "didn't save!"
       flash[:notice] = "Please enter an Attachment"
       redirect_to :action => "submit_deliverable"
     end

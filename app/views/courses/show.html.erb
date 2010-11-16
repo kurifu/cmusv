@@ -36,6 +36,9 @@
     <%=h @course.remind_about_effort %>
   </p>
 
+  <p>
+    <%= link_to "Upload a Deliverable", "/courses/#{@course.id}/submit_deliverable" %>
+  </p>
 
 
 <%= link_to 'Teams for the course', course_teams_path(@course) %><br>

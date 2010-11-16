@@ -271,6 +271,7 @@ class PeopleController < ApplicationController
   def my_teams
     @person = Person.find(params[:id])
     person_id = @person.id.to_i
+
     if (current_user.id != person_id)
       unless (current_user.is_staff?)||(current_user.is_admin?)
       flash[:error] = 'You don''t have permission to see another person''s teams.'
@@ -278,6 +279,8 @@ class PeopleController < ApplicationController
       end
     end
     @course = Course.new()
+
+    session[:person_id] = @person.id
 
     @current_year = Date.today.year()
     @current_semester = ApplicationController.current_semester()

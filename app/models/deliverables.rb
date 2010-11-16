@@ -4,23 +4,25 @@ class Deliverables < ActiveRecord::Base
   belongs_to :team
   after_save :prepare_and_send_faculty_email
 
+  validates_attachment_presence :attachment
+
 #   :url => "/:attachment/:id_:style.:extension",
 #    :path => ":rails_root/public/:attachment/:id_:style.:extension",
    has_attached_file :attachment,
-     :storage => :s3,
-     :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-     #:path => ":attachment/:id/#{:attachment_file_name}.:extension",
-     :path => "attachments/:id/:attachment_file_name",
-     :bucket => 'cmusv-rails-mfse-development'
-=begin
-  has_attached_file :paper,
-      :storage => :s3,
-      :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
-      :path => "papers/:id/:filename"
-=end
+    :path => "attachments/:id/:filename",
+    :storage => :s3,
+      :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml"
+
+#     :storage => :s3,
+#    :s3_credentials => "#{RAILS_ROOT}/config/amazon_s3.yml",
+#    :path => "attachments/:id"
+
+#    :bucket => 'cmusv-rails-mfse-development'
+
+
   #validates_presence_of :submission_date, :person
 
-  validates_attachment_presence :attachment
+  
 
   validates_attachment_content_type :attachment,
     :content_type => ['application/zip'],

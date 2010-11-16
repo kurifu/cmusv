@@ -5,7 +5,6 @@
     <th>Team</th>
     <th>Email</th>
     <th>Tigris</th>
-    <th>Upload</th>
     <th>Semester</th>
     <th>Year</th>
     <th width="100">Faculty</th>
@@ -14,7 +13,7 @@
   </tr>
   <% teams.each do |team|%>
     <tr class=<%= cycle('twikiTableOdd', 'twikiTableEven')%> >
-        <td><%=h team.course.name %></td>
+        <td><%= link_to team.course.name, "/courses/show/#{team.course.id}?team_id=#{team.id}"%></td>
       <% if !team.twiki_space.nil? && !team.twiki_space.empty? %>
         <td class="twikiFirstCol"><a href='<%=h team.twiki_space%>'><%=h team.name %></a></td>
       <% else %>
@@ -30,7 +29,6 @@
       <% else %>
         <td> &nbsp; </td>
       <% end %>
-        <td><%= link_to "Upload", "courses/#{team.course.id}/submit_deliverable" %></td>
         <td><%=h team.course.semester %></td>
         <td><%=h team.course.year %></td>
       <% if team.primary_faculty %>
