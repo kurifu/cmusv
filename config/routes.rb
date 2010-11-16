@@ -1,9 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :deliverables
 
-  map.connect '/people/:people_id/courses/:course_id/create_deliverable', :controller => 'courses', :action => 'create_deliverable'
-  map.connect '/people/:people_id/courses/:course_id/submit_deliverable', :controller => 'courses', :action => 'submit_deliverable'
-  map.connect '/people/:people_id/courses/:course_id/show_deliverable', :controller => 'courses', :action => 'show_deliverable'
+#
+#  map.connect '/people/:people_id/courses/:course_id/create_deliverable', :controller => 'courses', :action => 'create_deliverable'
+#  map.connect '/people/:people_id/courses/:course_id/submit_deliverable', :controller => 'courses', :action => 'submit_deliverable'
+#  map.connect '/people/:people_id/courses/:course_id/show_deliverable', :controller => 'courses', :action => 'show_deliverable'
+
+  #map.connect 'courses/:id/', :controller => 'courses', :action => 'create_deliverable'
+  map.connect 'courses/:course_id/create_deliverable', :controller => 'courses', :action => 'create_deliverable'
+  map.connect 'courses/:course_id/submit_deliverable', :controller => 'courses', :action => 'submit_deliverable'
+  map.connect 'courses/:course_id/show_deliverable', :controller => 'courses', :action => 'show_deliverable'
 
   map.resources :users
 
@@ -53,7 +59,7 @@ ActionController::Routing::Routes.draw do |map|
     map.connect '/effort_reports/campus_semester', :controller => 'effort_reports', :action => 'campus_semester'
     map.connect '/effort_reports/course/:course_id', :controller => 'effort_reports', :action => 'course'
 
-  
+
   map.resources :effort_reports
 
   map.connect '/people/phone_book', :controller => 'people', :action => 'phone_book'
@@ -70,16 +76,16 @@ ActionController::Routing::Routes.draw do |map|
 #  map.with_options :controller => "teams" do |page|
 #    page.conce
 #   page.concept_for_b_view  '/concept_for_b_view', :action => 'all'
-# end  
+# end
   map.teams '/teams', :controller => 'teams', :action => 'index_all'
-  
+
   map.resources :users
 
   map.resource :user_session
   map.login_google '/login_google', :controller => 'user_sessions', :action => 'login_google'
 
-  
-  map.load_chart '/load_chart', :controller => 'effort_reports', :action => 'load_chart' 
+
+  map.load_chart '/load_chart', :controller => 'effort_reports', :action => 'load_chart'
 #  map.load_google_chart '/load_google_chart', :controller => 'effort_reports', :action => 'load_google_chart'
 
 
@@ -101,7 +107,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
@@ -133,6 +139,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.new_features '/new_features', :controller => "welcome", :action => "new_features"
   map.config '/config', :controller => "welcome", :action => "config"
-  
+
   map.root :controller => "welcome"
 end

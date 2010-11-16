@@ -150,36 +150,9 @@ class CoursesController < ApplicationController
     @attachment.task_number = params[:task_number]
     @attachment.comments = params[:comments]
     @attachment.team_id = session[:team_id]
-    #teams_in_course = Team.find_by_id(:conditions => ["course_id = #{params[:course_id]}"])
-    #team_for_person = TeamsPeople.find(:team_id, :conditions => ["person_id = #{params[:person_id]}"])
-    #@attachment.team_id = teams_in_course & team_for_person
-
-    #target = Team.find(:course_id, :joins => :teams_people, :conditions => {:teams_people => {:person_id => params[:person_id], :team_id => }})
-
-    #team_ids = TeamsPeople.find(:team_id, :joins => :condition => ["person_id = ?", params[:person_id]])
-    #@attachment.team_id = teams_ids.find(:id, :conditions => ["email = ?", current_user.email])
-
-#    @target_team = User.find(@attachment.person_id).teams
-#    if @target_team.course_id == @attachment.course_id
-#  puts "TARGET TEAM COURSE ID #{@target_team.course_id}"
-#    @attachment.team_id = @target_team.team_id
-#      puts "CHECK team_id: #{@attachment.team_id}"
-#    else
-#      puts "ERROR?"
-#    end
-puts "MYTEAM #{session[:team_id]}"
-#    @target_team = User.find(@attachment.person_id)
-#
-#    @target_course_team = Course.find(@attachment.course_id).teams
-#
-#    for team in @target_course_team
-#          puts "TEAM: #{team.id}"
-#      members = Team.find(team.id).people
-#      puts ("TEAM MEMBER #{members.id}\n")
-#    end
-#    puts "CURRENT USER #{current_user}"
-      #puts "COURSE ID #{@target_team_ac}"
-    
+   
+     
+  
     if @attachment.save
       puts "WORKS?!"
       flash[:notice]
@@ -198,7 +171,23 @@ puts "MYTEAM #{session[:team_id]}"
     #@course_name = Courses.find(:name, :conditions => ["course_id = #{@attachment.course_id}"])
     #@team_name = Teams.find(:name, :conditions => ["id = #{@attachment.team_id}"])
     #User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = 't'"])
-
+    @all_deliverables = Deliverables.find(:all,
+      :conditions => "team_id = #{@attachment.team_id}")
+    student_name = User.find(:all,:select => 'human_name',
+      :conditions => "id = #{@attachment.person_id}")
+    course_name = Course.find(:all, :select => 'name',
+      :conditions => "id = #{@attachment.course_id}")
+    team_name = Team.find(:all, 
+      :conditions => "id = #{@attachment.team_id}")
+    for name in student_name do
+      @student_name = name.human_name
+    end
+    for course in course_name do
+      @course_name = course.name
+    end
+    for team in team_name do
+      @team_name = team.name
+    end
     respond_to do |format|
       format.html # show.html.erb
     end
