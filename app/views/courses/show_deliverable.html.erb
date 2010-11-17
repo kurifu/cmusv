@@ -3,27 +3,13 @@ File Name: <%= @attachment.attachment_file_name %><br/>
 File Content Type: <%= @attachment.attachment_content_type %><br/>
 File Size (Bytes): <%= @attachment.attachment_file_size %><br/>
 File Updated At: <%= @attachment.attachment_updated_at %><br/>
-File Name: <%=link_to "#{@attachment.attachment_file_name}", @attachment.attachment.url%><br/>
-Course: <%= @course_name %><br/>
+File Name: <%=  link_to "#{@attachment.attachment_file_name}", @attachment.attachment.url%><br/>
+Course: <%= link_to @course_name, "/courses/#{@attachment.course_id}" %><br/>
+Task Number: <%= @attachment.task_number %><br/>
 Submitted By: <%= @student_name %><br/>
 Submitted for Team: <%= @team_name%> <br />
-All Deliverables by this team: <br />
-<table border ="1">
-  <tr>
-    <td>
-      File Name
-    </td>
-    <td>Date Submitted</td>
-  </tr>
-  <%for all_deliverables in @all_deliverables do%>
-  <tr>
-    <td>
-<%= link_to "#{all_deliverables.attachment_file_name}",
-  all_deliverables.attachment.url %> 
-  </td>
-  <td>
-    <%= all_deliverables.submission_date %>
-  </td>
-  </tr>
-  <%end%>
-</table>
+Deliverables for this Course: 
+  <%= link_to "See All", "/courses/#{@attachment.course_id}/show_all_deliverables?team_id=#{@attachment.team_id}" %>
+<p/><p/>
+<%= link_to "&laquo; Upload Another Deliverable", "/courses/#{@attachment.course_id}/submit_deliverable" %><br/>
+<%= link_to "&laquo; Back to Course Page", "/courses/#{@attachment.course_id}?team_id=#{@attachment.team_id}" %>

@@ -22,11 +22,14 @@ class Deliverables < ActiveRecord::Base
 
   #validates_presence_of :submission_date, :person
 
-  
+  # Not needed; this message appears via deliverables views, but our upload
+  # functionality is located in the courses controller
+  #validates_attachment_presence :attachment
 
-  validates_attachment_content_type :attachment,
-    :content_type => ['application/zip'],
-    :message => "Please attach a .zip file"
+  # Not sure what file formats to accept
+  #validates_attachment_content_type :attachment,
+  #  :content_type => ['application/zip'],
+  #  :message => "Please attach a .zip file"
 
   def prepare_and_send_faculty_email
      submitter =  (team && team.name) || person.human_name

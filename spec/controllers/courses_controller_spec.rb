@@ -7,12 +7,12 @@ describe CoursesController do
     Deliverables.delete_all
     Team.delete_all
     Course.delete_all
-    course = Factory.create(:course)
-    team = Factory.create(:team, :course => course)
+    @course = Factory.create(:course)
+    @team = Factory.create(:team, :course => @course)
     @good = Factory.create(:bob)
     @bad = Factory.create(:robert)
     @staff = Factory.create(:staff)
-    team.people << @good
+    @team.people << @good
     @deliverable = Factory.create(:deliverable, :person => @good, :team => team)
   end
 
@@ -42,9 +42,11 @@ describe CoursesController do
 
   describe "GET show_deliverable" do
     it "should show the deliverable" do
+      @course = Factory.create(:course)
+      @team = Factory.create(:team, :course => @course)
       Deliverables.stub(:find).and_return(mock_deliverable)
       get :show_deliverable
-      #response.should render_template("show_deliverable")
+      response.should render_template("show_deliverable")
       #response.should redirect_to("show_deliverable")
     end
 

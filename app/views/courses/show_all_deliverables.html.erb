@@ -1,0 +1,23 @@
+All Deliverables by <%= @team_name %> : <br />
+
+<table id="all_deliverables">
+  <tr>
+    <th>Task Number</th>
+    <th>File Name</th>
+    <th>Date Submitted</th>
+  </tr>
+  <% for @deliverable in @all_deliverables do %>
+  <tr>
+    <td><%= @deliverable.task_number %></td>
+    <td><%= link_to "#{@deliverable.attachment_file_name}",
+        @deliverable.attachment.url %>
+    </td>
+    <td>
+      <%= @deliverable.submission_date %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= link_to "&laquo; Upload Another Deliverable", "/courses/#{params[:course_id]}/submit_deliverable" %><br/>
+<%= link_to "&laquo; Back to Course Page", "/courses/#{params[:course_id]}?team_id=#{@team_id}" %>

@@ -40,8 +40,13 @@
     <%= link_to "Upload a Deliverable", "/courses/#{@course.id}/submit_deliverable" %>
   </p>
 
+  <p>
+    <%= link_to "Show All Deliverables", "/courses/#{@course.id}/show_all_deliverables?team_id=#{params[:team_id]}" %>
+  </p>
 
-<%= link_to 'Teams for the course', course_teams_path(@course) %><br>
+  <p>
+    <%= link_to 'Teams for the course', course_teams_path(@course) %>
+  </p>
 <% if current_user && (current_user.is_staff? || current_user.is_admin?) %>
 <%= link_to 'Effort Reports for the course', :controller=> "effort_reports", :action=>"show", :id => params[:id], :week => nil, :only_path=>true%>
 <% end %>

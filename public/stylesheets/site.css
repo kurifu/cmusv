@@ -266,3 +266,19 @@ border-width:1px;
 div.modified {
     text-align: right;
 }
+
+table#all_deliverables {
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+table#all_deliverables, table#all_deliverables td, table#all_deliverables th {
+    border: 1px solid black;
+    padding: 2px 2px 2px 2px;
+}
+
+table#all_deliverables th {
+    text-align: center;
+
+}

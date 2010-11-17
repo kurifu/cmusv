@@ -7,6 +7,8 @@ ActionController::Routing::Routes.draw do |map|
 #  map.connect '/people/:people_id/courses/:course_id/show_deliverable', :controller => 'courses', :action => 'show_deliverable'
 
   #map.connect 'courses/:id/', :controller => 'courses', :action => 'create_deliverable'
+
+  map.connect 'courses/:course_id/show_all_deliverables', :controller => 'courses', :action => 'show_all_deliverables'
   map.connect 'courses/:course_id/create_deliverable', :controller => 'courses', :action => 'create_deliverable'
   map.connect 'courses/:course_id/submit_deliverable', :controller => 'courses', :action => 'submit_deliverable'
   map.connect 'courses/:course_id/show_deliverable', :controller => 'courses', :action => 'show_deliverable'

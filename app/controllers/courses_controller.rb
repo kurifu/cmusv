@@ -150,8 +150,6 @@ class CoursesController < ApplicationController
     @attachment.task_number = params[:task_number]
     @attachment.comments = params[:comments]
     @attachment.team_id = session[:team_id]
-   
-     
   
     if @attachment.save
       puts "WORKS?!"
@@ -168,28 +166,33 @@ class CoursesController < ApplicationController
 
   def show_deliverable
     @attachment = Deliverables.find(params[:id])
-    #@course_name = Courses.find(:name, :conditions => ["course_id = #{@attachment.course_id}"])
-    #@team_name = Teams.find(:name, :conditions => ["id = #{@attachment.team_id}"])
-    #User.find(:all, :order => "twiki_name", :conditions => ["is_teacher = 't'"])
-    @all_deliverables = Deliverables.find(:all,
-      :conditions => "team_id = #{@attachment.team_id}")
+    
     student_name = User.find(:all,:select => 'human_name',
       :conditions => "id = #{@attachment.person_id}")
     course_name = Course.find(:all, :select => 'name',
       :conditions => "id = #{@attachment.course_id}")
     team_name = Team.find(:all, 
       :conditions => "id = #{@attachment.team_id}")
-    for name in student_name do
-      @student_name = name.human_name
-    end
-    for course in course_name do
-      @course_name = course.name
-    end
-    for team in team_name do
-      @team_name = team.name
-    end
+
+    @student_name = student_name[0].human_name
+    @course_name = course_name[0].name
+    @team_name = team_name[0].name
+
     respond_to do |format|
       format.html # show.html.erb
+    end
+  end
+
+  def show_all_deliverables
+    @team_id = params[:team_id]
+    teams = Team.find(:all, :conditions => "id = #{@team_id}")
+    @team_name = teams[0].name
+
+
+    #puts "team name: #{@team_name}"
+    @all_deliverables = Deliverables.find(:all, :conditions => "team_id = #{@team_id}")
+    respond_to do |format|
+      format.html
     end
   end
 
